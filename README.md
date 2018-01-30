@@ -29,11 +29,14 @@ vagrant up
 vagrant ssh -c 'cd /vagrant; ./bin/build-all.sh'
 ```
 
-Once completed (by either method), you can copy this image to a USB stick:
+Once completed (by either method), you can copy this image to a USB stick using this command:
 
 ```
 sudo dd if=output/gale.bin of=/dev/<usbdevice> bs=1m
 ```
+
+or by using [Google's OnHub Recovery Utility](https://chrome.google.com/webstore/detail/onhub-recovery-utility/eakkgknfmgeecamodkgdnoabcphgaidc) (Recommended)
+
 
 ## How to apply an image
 
