@@ -51,9 +51,9 @@ You'll have to put the Google Wifi into developer mode:
 8. Plug in USB stick
 9. Hit bubble switch again
 10. Wait about five minutes until device pulsing purple (device shows no lights while updating from USB)
+11. Open your Google Wifi app and run through the setup procedure
 
-Once installed you can then:
-
+## Connecting after setup
 ```
 ssh root@192.168.86.1 (password changeme)
 ```
