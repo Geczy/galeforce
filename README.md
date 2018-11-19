@@ -64,6 +64,8 @@ Once installed you can then:
 
 ```
 ssh root@192.168.86.1 (password changeme)
+# IP might be different, try 192.168.84.1
+# See https://github.com/marcosscriven/galeforce/issues/13
 ```
 
 ```
