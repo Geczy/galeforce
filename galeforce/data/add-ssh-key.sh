@@ -13,7 +13,6 @@ else
 fi
 
 if awk '/PasswordAuthentication/ { print }' /etc/ssh/sshd_config; then
-	echo "Exists, changing to NO"
 	sed -i -e 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
 else
 	echo "PasswordAuthentication doesn't exist, adding"
