@@ -11,3 +11,25 @@ else
   echo "Key not present for usernameHERE user, adding it..."
   echo "ssh-rsa ENTIREKEYGOESHERE"  >> /root/.ssh/authorized_keys
 fi
+
+if awk '/PasswordAuthentication/ { print }' /etc/ssh/sshd_config; then
+	echo "Exists, changing to NO"
+	sed -i -e 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+else
+	echo "PasswordAuthentication doesn't exist, adding"
+	echo "PasswordAuthentication no"  >> /etc/ssh/sshd_config
+fi
+
+if awk '/ChallengeResponseAuthentication/ { print }' /etc/ssh/sshd_config; then
+	sed -i -e 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
+else
+	echo "ChallengeResponseAuthentication doesn't exist, adding"
+	echo "ChallengeResponseAuthentication no"  >> /etc/ssh/sshd_config
+fi
+
+if awk '/UsePAM/ { print }' /etc/ssh/sshd_config; then
+	sed -i -e 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+else
+	echo "UsePAM doesn't exist, adding"
+	echo "UsePAM no"  >> /etc/ssh/sshd_config
+fi
