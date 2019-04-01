@@ -10,6 +10,21 @@
 pushd $(dirname "$0")
 source ./common.sh
 
+if [ ! -e /usr/bin/jq ]; then
+    echo "install jq before continuing"
+    exit -1
+fi
+
+if [ ! -e /usr/bin/vbutil_kernel ]; then
+    echo "Install vbutil_kernel before continuing"
+    exit -1
+fi
+
+if [ ! -e /sbin/kpartx ]; then
+    echo "Install kpartx before continuing"
+    exit -1
+fi
+
 BOARD="gale"
 IMAGE_METADATA_URL="https://dl.google.com/dl/edgedl/chromeos/recovery/onhub_recovery.json"
 DEV_KEYS_URL="https://chromium.googlesource.com/chromiumos/platform/vboot_reference/+archive/master/tests/devkeys.tar.gz"
