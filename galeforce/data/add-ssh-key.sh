@@ -1,15 +1,19 @@
 #!/bin/bash
 
-# Replace usernameHERE with your email address or your name
-# Add the full ssh-rsa key in the last echo, make sure usernameHERE exists in the key
+# Your username
+newUser="username-from-pub-key"
+
+# id-rsa.pub from host
+# Make sure $newUser exists in the key
+rsaKey="ssh-rsa ENTIREKEYGOESHERE"
 
 mkdir -p /root/.ssh 2>&1
 chown -R root /root/.ssh
-if awk '$3 ~ /usernameHERE/ { print }' /root/.ssh/authorized_keys; then
-  echo "Key already present for usernameHERE user"
+if awk '$3 ~ /$newUser/ { print }' /root/.ssh/authorized_keys; then
+  echo "Key already present for $newUser user"
 else
-  echo "Key not present for usernameHERE user, adding it..."
-  echo "ssh-rsa ENTIREKEYGOESHERE"  >> /root/.ssh/authorized_keys
+  echo "Key not present for $newUser user, adding it..."
+  echo "$rsaKey"  >> /root/.ssh/authorized_keys
 fi
 
 if [ $(awk '/PasswordAuthentication/{var=1}END{print var+0}' /etc/ssh/sshd_config) = "1" ]; then
