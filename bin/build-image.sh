@@ -20,7 +20,7 @@ mkdir -p "$DEV_KEYS_DIR" "$MOUNTS_DIR"
 LOOP_MOUNT_NUMBER=18
 
 function getImageMetadata() {
-  curl -s $IMAGE_METADATA_URL | jq '.[] | select(.hwidmatch | test(".*'"$BOARD"'.*";"i"))| {name, sha1, url}'
+  curl -s $IMAGE_METADATA_URL | ./jq '.[] | select(.hwidmatch | test(".*'"$BOARD"'.*";"i"))| {name, sha1, url}'
 }
 
 function unpackImage() {
