@@ -10,7 +10,7 @@ GaleForce is a project to customise the Google Wifi router. This enables you to:
 
 ## Pre-built images
 
-Use [Google's OnHub Recovery Utility](https://chrome.google.com/webstore/detail/onhub-recovery-utility/eakkgknfmgeecamodkgdnoabcphgaidc) (Recommended)
+Use [Google's OnHub Recovery Utility](https://chrome.google.com/webstore/detail/onhub-recovery-utility/eakkgknfmgeecamodkgdnoabcphgaidc)
 
 ## How to apply an image
 
