@@ -4,7 +4,7 @@ pushd $(dirname "$0")
 source ./common.sh
 
 BUSYBOX_URL="https://busybox.net/downloads/binaries/1.28.1-defconfig-multiarch/busybox-armv8l"
-DROPBEAR_URL="http://ports.ubuntu.com/ubuntu-ports/pool/universe/d/dropbear/dropbear-bin_2018.76-4_armhf.deb"
+DROPBEAR_URL="http://archive.raspbian.org/raspbian/pool/main/d/dropbear/dropbear-bin_2018.76-5_armhf.deb"
 
 function downloadBusybox() {
   if [ ! -f "$DOWNLOADS_DIR/busybox" ]
@@ -29,6 +29,21 @@ function downloadDropbear() {
     rm -rf $DOWNLOADS_DIR/extract
   fi
 }
+
+if [ ! -e /usr/bin/jq ]; then
+    echo "install jq before continuing"
+    exit -1
+fi
+
+if [ ! -e /usr/bin/vbutil_kernel ]; then
+    echo "Install vbutil_kernel before continuing"
+    exit -1
+fi
+
+if [ ! -e /sbin/kpartx ]; then
+    echo "Install kpartx before continuing"
+    exit -1
+fi
 
 echo "Building GaleForce."
 
