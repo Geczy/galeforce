@@ -29,11 +29,7 @@ vagrant up
 vagrant ssh -c 'cd /vagrant; ./bin/build-all.sh'
 ```
 
-Once completed (by either method), you can copy this image to a USB stick:
-
-```
-sudo dd if=output/gale.bin of=/dev/<usbdevice> bs=1m
-```
+Once completed (by either method), you can copy this image to a USB stick by using [Google's OnHub Recovery Utility](https://chrome.google.com/webstore/detail/onhub-recovery-utility/eakkgknfmgeecamodkgdnoabcphgaidc)
 
 ## How to apply an image
 
@@ -51,11 +47,18 @@ You'll have to put the Google Wifi into developer mode:
 8. Plug in USB stick
 9. Hit bubble switch again
 10. Wait about five minutes until device pulsing purple (device shows no lights while updating from USB)
+11. Open your Google Wifi app and run through the setup procedure
+
+If you did everything correctly, your device is now in developer mode and you should get the same light signals as described [here](https://support.google.com/wifi/answer/6191584?hl=en), except the blue light is now purple.
+
+## Connecting after setup
 
 Once installed you can then:
 
 ```
 ssh root@192.168.86.1 (password changeme)
+# IP might be different, try 192.168.84.1
+# See https://github.com/marcosscriven/galeforce/issues/13
 ```
 
 ```
@@ -99,7 +102,7 @@ Usage: wc [-cmlwL] [FILE]...
 
 ## Shell
 
-The default shell seems to be dash, but you can change it easily enough. I prefer bash as it has tab completion and 
+The default shell seems to be dash, but you can change it easily enough. I prefer bash as it has tab completion and
 history navigation:
 
 ```
@@ -123,17 +126,17 @@ You will only need to setup GaleForce with the recovery image once. Whenever an 
 
 ## Why not just build Chromium OS from source
 
-I tried - it's fairly easy to do and [well documented](http://www.chromium.org/chromium-os/developer-guide#TOC-Select-a-board). 
-However, with the Google Wifi (codename ```gale```), you'll find the [board overlays](http://www.chromium.org/chromium-os/developer-guide#TOC-Select-a-board) are not there. 
+I tried - it's fairly easy to do and [well documented](http://www.chromium.org/chromium-os/developer-guide#TOC-Select-a-board).
+However, with the Google Wifi (codename ```gale```), you'll find the [board overlays](http://www.chromium.org/chromium-os/developer-guide#TOC-Select-a-board) are not there.
 This means much of the config and blobs are [closed source](https://www.chromium.org/chromium-os/how-tos-and-troubleshooting/chromiumos-board-porting-guide/private-boards) and proprietary.
 
 ## Thanks
 
 Thanks to these kind folk who helped me out on the [Chromium OS dev](https://groups.google.com/a/chromium.org/forum/?hl=en#!forum/chromium-os-dev) Google Group:
 
-* Mike Frysinger	
-* Bill Richardson	
-* Bernie Thompson	
+* Mike Frysinger
+* Bill Richardson
+* Bernie Thompson
 * Julius Werner
 
 [Patching images](https://groups.google.com/a/chromium.org/forum/?hl=en#!topic/chromium-os-dev/nggdayKYTTE)

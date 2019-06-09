@@ -32,9 +32,10 @@ DEV_KEYS_URL="https://chromium.googlesource.com/chromiumos/platform/vboot_refere
 DEV_KEYS_DIR="$DOWNLOADS_DIR/devkeys"
 MOUNTS_DIR="$BUILD_DIR/mounts"
 mkdir -p "$DEV_KEYS_DIR" "$MOUNTS_DIR"
+LOOP_MOUNT_NUMBER=18
 
 function getImageMetadata() {
-  curl -s $IMAGE_METADATA_URL | jq '.[] | select(.hwidmatch | test(".*'"$BOARD"'.*";"i"))| {name, sha1, url}'
+  curl -s $IMAGE_METADATA_URL | ./jq '.[] | select(.hwidmatch | test(".*'"$BOARD"'.*";"i"))| {name, sha1, url}'
 }
 
 function unpackImage() {
@@ -111,7 +112,8 @@ function getLoopDeviceForPartition() {
 
   img=$BUILD_DIR/$BOARD.bin
   partitionNumber=$(parted $img unit B print | grep $partitionName | tr -s ' ' | cut -d ' ' -f2)
-  echo "/dev/mapper/loop0p$partitionNumber"
+  loopDevice=$(printf "%sp%s" $LOOP_MOUNT_NUMBER $partitionNumber)
+  echo "/dev/mapper/loop$loopDevice"
 }
 
 function enableReadWrite() {
@@ -152,10 +154,10 @@ function patchRoot() {
   echo '/galeforce/bin/recovery.sh "${INSTALL_ROOT}"' >> usr/sbin/chromeos-postinst
   cat usr/sbin/chromeos-postinst
   # Debug - add telnet
-#  sudo cp galeforce/conf/telnet.conf etc/init
-#  sudo cp galeforce/conf/shadow etc/shadow
-#  sudo cp galeforce/bin/busybox bin
-#  sudo chmod u+x bin/busybox
+  sudo cp galeforce/conf/telnet.conf etc/init
+  sudo cp galeforce/data/shadow etc/shadow
+  sudo cp galeforce/bin/busybox bin
+  sudo chmod u+x bin/busybox
 
   popd
   unmountPartition $rootName
@@ -220,9 +222,12 @@ function createPatchImage() {
   cp "$DOWNLOADS_DIR/$BOARD.bin" "$BUILD_DIR/$BOARD.bin"
 
   echo "Mapping partitions to loop devices"
-  sudo kpartx -a "$BUILD_DIR/$BOARD.bin"
+  LOOP_MOUNT_NUMBER=$(sudo kpartx -v -a "$BUILD_DIR/$BOARD.bin" | head -n 1 | awk '{print $3}' | cut -d'p' -f 2)
+
   # Need to wait a little bit for them to be ready
   sleep 2
+
+  echo "About to patch ROOT-A"
 
   # This is the main root (there's also ROOT-B)
   patchRoot ROOT-A

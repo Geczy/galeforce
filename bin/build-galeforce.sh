@@ -3,7 +3,7 @@
 pushd $(dirname "$0")
 source ./common.sh
 
-BUSYBOX_URL="https://busybox.net/downloads/binaries/1.26.2-defconfig-multiarch/busybox-armv6l"
+BUSYBOX_URL="https://busybox.net/downloads/binaries/1.28.1-defconfig-multiarch/busybox-armv8l"
 DROPBEAR_URL="http://archive.raspbian.org/raspbian/pool/main/d/dropbear/dropbear-bin_2018.76-5_armhf.deb"
 
 function downloadBusybox() {
@@ -11,6 +11,7 @@ function downloadBusybox() {
   then
     echo "Downloading busybox"
     curl -s $BUSYBOX_URL -o $DOWNLOADS_DIR/busybox
+    chmod +x $DOWNLOADS_DIR/busybox
   fi
 }
 
