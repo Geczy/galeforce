@@ -10,7 +10,26 @@ GaleForce is a project to customise the Google Wifi router. This enables you to:
 
 ## Pre-built images
 
-Use [Google's OnHub Recovery Utility](https://chrome.google.com/webstore/detail/onhub-recovery-utility/eakkgknfmgeecamodkgdnoabcphgaidc)
+GaleForce uses Travis and produces tagged binaries available from [here](https://github.com/marcosscriven/galeforce/releases).
+
+## How to build an image
+
+Firstly - you **must ensure** you've checked out a tagged version of the code. Not every commit has been tested on the router.
+If you're on a reasonably modern Linux system, you can simply run:
+
+```
+./bin/build-all.sh
+```
+
+If however you're on Windows or macOS, you'll need to use Vagrant (unfortunately
+Docker for these systems don't have the necessary functions in their xhyve kernels to map loop devices properly):
+
+```
+vagrant up
+vagrant ssh -c 'cd /vagrant; ./bin/build-all.sh'
+```
+
+Once completed (by either method), you can copy this image to a USB stick by using [Google's OnHub Recovery Utility](https://chrome.google.com/webstore/detail/onhub-recovery-utility/eakkgknfmgeecamodkgdnoabcphgaidc)
 
 ## How to apply an image
 
