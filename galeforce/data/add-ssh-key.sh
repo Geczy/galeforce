@@ -1,15 +1,13 @@
 #!/bin/bash
 
-# Your username
-newUser="username-from-pub-key"
-
 # id-rsa.pub from host
 # Make sure $newUser exists in the key
 rsaKey="ssh-rsa ENTIREKEYGOESHERE"
+lastten=${rsaKey: -21}
 
 mkdir -p /root/.ssh 2>&1
 chown -R root /root/.ssh
-if awk '$3 ~ /$newUser/ { print }' /root/.ssh/authorized_keys; then
+if grep --quiet "$lastten" /root/.ssh/authorized_keys; then
   echo "Key already present for $newUser user"
 else
   echo "Key not present for $newUser user, adding it..."
