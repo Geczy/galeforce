@@ -1,3 +1,7 @@
+# WARNING - THIS PROJECT IS UNMAINTAINED AND DOES NOT WORK ON ANY GOOGLE WIFI, ONHUB, OR NEST PRODUCTS! DO NOT USE IF YOU WANT A WORKING NETWORK.
+
+---
+
 # GaleForce
 
 [![Build Status](https://travis-ci.org/marcosscriven/galeforce.svg?branch=master)](https://travis-ci.org/marcosscriven/galeforce)
